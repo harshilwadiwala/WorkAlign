@@ -108,6 +108,13 @@
     --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
+/* Dark mode class support */
+.dark-mode {
+    --glass-bg: rgba(0, 0, 0, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -235,10 +242,7 @@ a:hover::after {
 .navbar-brand {
     font-size: 1.75rem;
     font-weight: 800;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--secondary-900) !important;
     transition: all var(--transition-normal);
     display: flex;
     align-items: center;
@@ -252,10 +256,7 @@ a:hover::after {
 
 .navbar-brand i {
     font-size: 2rem;
-    background: var(--gradient-secondary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--secondary-900) !important;
 }
 
 .navbar-nav .nav-link {
@@ -296,6 +297,36 @@ a:hover::after {
     box-shadow: var(--shadow-md);
 }
 
+/* Dark Mode Navbar Fixes */
+.dark-mode .navbar-brand,
+.dark-mode .navbar-brand span {
+    color: white !important;
+    text-shadow: none !important;
+}
+
+.dark-mode .navbar-brand i {
+    color: white !important;
+    text-shadow: none !important;
+}
+
+.dark-mode .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: none !important;
+}
+
+.dark-mode .navbar-nav .nav-link:hover {
+    color: white !important;
+}
+
+.dark-mode .navbar-nav .nav-link.active {
+    color: white !important;
+}
+
+.dark-mode .navbar i {
+    color: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: none !important;
+}
+
 /* Theme Toggle */
 .theme-toggle {
     background: var(--glass-bg);
@@ -311,6 +342,27 @@ a:hover::after {
     background: var(--gradient-primary);
     color: white;
     transform: scale(1.1);
+}
+
+/* Dropdown Menu Dark Mode Fixes */
+.dark-mode .dropdown-menu {
+    background: rgba(30, 41, 59, 0.95) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .dropdown-item {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.dark-mode .dropdown-item:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: white !important;
+}
+
+.dark-mode .dropdown-divider {
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Advanced Cards */
