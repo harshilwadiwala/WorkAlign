@@ -15,7 +15,85 @@ if (isset($_COOKIE['dark_mode'])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="assets/css/style-advanced.css" rel="stylesheet">
+    <link href="assets/css/style-advanced.css?v=<?php echo time(); ?>" rel="stylesheet">
+    <style>
+        /* Force Quick Action Button Styles */
+        .quick-action-btn {
+            width: 100% !important;
+            padding: 2rem !important;
+            border-radius: 1.25rem !important;
+            border: 2px solid transparent !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9)) !important;
+            color: var(--primary-600, #2563eb) !important;
+            font-weight: 600 !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            margin-bottom: 1rem !important;
+            position: relative !important;
+            overflow: hidden !important;
+            backdrop-filter: blur(15px) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        .quick-action-btn i,
+        .quick-action-btn .fa-2x {
+            position: relative !important;
+            z-index: 2 !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            display: inline-block !important;
+            font-size: 2.5rem !important;
+            width: 2.5rem !important;
+            height: 2.5rem !important;
+            line-height: 2.5rem !important;
+            text-align: center !important;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15)) !important;
+        }
+
+        /* Icon colors */
+        .quick-action-btn:nth-child(1) i { color: #2563eb !important; }
+        .quick-action-btn:nth-child(2) i { color: #16a34a !important; }
+        .quick-action-btn:nth-child(3) i { color: #d97706 !important; }
+        .quick-action-btn:nth-child(4) i { color: #7c3aed !important; }
+        .quick-action-btn:nth-child(5) i { color: #dc2626 !important; }
+        .quick-action-btn:nth-child(6) i { color: #4b5563 !important; }
+
+        .quick-action-btn:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+            color: white !important;
+            transform: translateY(-6px) scale(1.02) !important;
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.3) !important;
+            border-color: #2563eb !important;
+        }
+
+        .quick-action-btn:hover i {
+            color: white !important;
+            transform: scale(1.1) !important;
+        }
+
+        /* Dark mode support */
+        .dark-mode .quick-action-btn {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(51, 65, 85, 0.9)) !important;
+            color: #f1f5f9 !important;
+        }
+
+        .dark-mode .quick-action-btn:nth-child(1) i { color: #60a5fa !important; }
+        .dark-mode .quick-action-btn:nth-child(2) i { color: #34d399 !important; }
+        .dark-mode .quick-action-btn:nth-child(3) i { color: #fbbf24 !important; }
+        .dark-mode .quick-action-btn:nth-child(4) i { color: #a78bfa !important; }
+        .dark-mode .quick-action-btn:nth-child(5) i { color: #f87171 !important; }
+        .dark-mode .quick-action-btn:nth-child(6) i { color: #9ca3af !important; }
+
+        /* Small description text styling */
+        .quick-action-btn small {
+            color: #6b7280 !important;
+            font-weight: 400 !important;
+            opacity: 0.8 !important;
+        }
+
+        .dark-mode .quick-action-btn small {
+            color: #9ca3af !important;
+            opacity: 0.9 !important;
+        }
+    </style>
     <style>
         :root {
             --primary-color: #2563eb;

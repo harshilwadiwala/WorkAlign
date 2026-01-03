@@ -51,6 +51,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php include 'header.php'; ?>
 
+<style>
+/* Fix navigation visibility on dark backgrounds */
+.navbar-brand,
+.navbar-brand span,
+.navbar-brand i {
+    color: #1e293b !important;
+    text-shadow: none !important;
+    font-weight: 600 !important;
+}
+
+.navbar-nav .nav-link {
+    color: #475569 !important;
+    text-shadow: none !important;
+    font-weight: 500 !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #2563eb !important;
+}
+
+/* Fix toggle switch visibility */
+.form-check-input:checked {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.form-check-input:checked::after {
+    background-color: white !important;
+}
+
+/* Fix gear icon and other nav icons */
+.navbar i {
+    color: #475569 !important;
+    text-shadow: none !important;
+}
+
+/* Dark mode specific fixes */
+.dark-mode .navbar-brand,
+.dark-mode .navbar-brand span,
+.dark-mode .navbar-brand i {
+    color: white !important;
+}
+
+.dark-mode .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.dark-mode .navbar-nav .nav-link:hover {
+    color: white !important;
+}
+
+.dark-mode .navbar i {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Login Button Hover Effect */
+.btn-primary {
+    border: 2px solid transparent !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-primary:hover {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15) !important;
+}
+</style>
+
 <div class="row justify-content-center">
     <div class="col-md-6 col-lg-4">
         <div class="card shadow-lg">
@@ -98,8 +165,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label class="form-check-label" for="remember">Remember me</label>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary w-100">
-                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    <button type="submit" class="btn btn-primary w-100 d-flex justify-content-center align-items-center">
+                        <i class="fas fa-sign-in-alt me-2"></i>
+                        <span>Login</span>
                     </button>
                 </form>
                 

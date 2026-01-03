@@ -14,6 +14,18 @@ if (isLoggedIn()) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
         <link href="assets/css/style.css" rel="stylesheet">
+        <style>
+            /* Fix Access Denied page text visibility */
+            .bg-gradient .text-muted {
+                color: rgba(255, 255, 255, 0.9) !important;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+            }
+            
+            .bg-gradient h3 {
+                color: white !important;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+            }
+        </style>
     </head>
     <body>
         <div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-gradient">
@@ -95,33 +107,14 @@ if (isLoggedIn()) {
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="text-center mt-4">
-                            <small class="text-muted">
-                                New employee? <a href="signup.php" class="text-decoration-none">Sign up here</a>
-                            </small>
-                        </div>
                     </div>
                 </div>
-                
-                <div class="text-center mt-4 text-white fade-in" style="animation-delay: 0.4s;">
-                    <div class="demo-credentials">
-                        <h6 class="mb-3"><i class="fas fa-info-circle me-2"></i>Demo Credentials</h6>
-                        <div class="row justify-content-center">
-                            <div class="col-md-6">
-                                <div class="credential-card">
-                                    <strong>Admin:</strong><br>
-                                    <code>admin@workalign.com</code> / <code>password</code>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="credential-card">
-                                    <strong>Employee:</strong><br>
-                                    <code>john.doe@company.com</code> / <code>password</code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="text-center mt-4">
+                    <p class="text-white">
+                        <i class="fas fa-user-plus me-2"></i>
+                        New to WorkAlign?
+                        <a href="signup.php" class="text-decoration-none text-warning fw-bold">Create your account</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -166,7 +159,7 @@ if (isLoggedIn()) {
         .icon-container {
             width: 60px;
             height: 60px;
-            margin: 0 auto;
+            margin: 0 auto 1rem;
             border-radius: 50%;
             background: var(--gradient-primary);
             display: flex;

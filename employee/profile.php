@@ -18,61 +18,69 @@ $stmt->bind_param("s", $employee_id);
 $stmt->execute();
 $employee = $stmt->get_result()->fetch_assoc();
 
+// Initialize variables to prevent undefined array key warnings
+$first_name = $employee['first_name'] ?? '';
+$last_name = $employee['last_name'] ?? '';
+$email = $employee['email'] ?? '';
+$phone = $employee['phone'] ?? '';
+$address = $employee['address'] ?? '';
+$department = $employee['department'] ?? '';
+$designation = $employee['designation'] ?? '';
+$date_of_joining = $employee['date_of_joining'] ?? '';
+$profile_picture = $employee['profile_picture'] ?? '';
+
 $errors = [];
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $first_name = sanitizeInput($_POST['first_name']);
-    $last_name = sanitizeInput($_POST['last_name']);
-    $phone = sanitizeInput($_POST['phone']);
-    $address = sanitizeInput($_POST['address']);
+    // Handle profile picture upload separately
+    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === 0) {
+        $upload_result = uploadFile($_FILES['profile_picture'], 'uploads/profile/');
+        
+        if ($upload_result['success']) {
+            // Delete old profile picture if exists
+            if ($profile_picture && file_exists('uploads/profile/' . $profile_picture)) {
+                unlink('uploads/profile/' . $profile_picture);
+            }
+            
+            $profile_picture = $upload_result['filename'];
+        } else {
+            $errors[] = $upload_result['message'];
+        }
+    }
+    
+    // Handle form data
+    $first_name = sanitizeInput($_POST['first_name'] ?? '');
+    $last_name = sanitizeInput($_POST['last_name'] ?? '');
+    $phone = sanitizeInput($_POST['phone'] ?? '');
+    $address = sanitizeInput($_POST['address'] ?? '');
     
     // Validation
     if (empty($first_name)) $errors[] = "First name is required";
     if (empty($last_name)) $errors[] = "Last name is required";
     
     if (empty($errors)) {
-        // Handle profile picture upload
-        $profile_picture = $employee['profile_picture'];
+        $stmt_update = $conn->prepare("UPDATE employees SET first_name = ?, last_name = ?, phone = ?, address = ?, profile_picture = ? WHERE employee_id = ?");
+        $stmt_update->bind_param("ssssss", $first_name, $last_name, $phone, $address, $profile_picture, $employee_id);
         
-        if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === 0) {
-            $upload_result = uploadFile($_FILES['profile_picture'], 'uploads/profile/');
+        if ($stmt_update->execute()) {
+            $success = "Profile updated successfully!";
             
-            if ($upload_result['success']) {
-                // Delete old profile picture if exists
-                if ($profile_picture && file_exists('uploads/profile/' . $profile_picture)) {
-                    unlink('uploads/profile/' . $profile_picture);
-                }
-                
-                $profile_picture = $upload_result['filename'];
-            } else {
-                $errors[] = $upload_result['message'];
-            }
+            // Update session
+            $_SESSION['first_name'] = $first_name;
+            $_SESSION['last_name'] = $last_name;
+            $_SESSION['profile_picture'] = $profile_picture;
+            
+            // Refresh employee data
+            $stmt = $conn->prepare("SELECT * FROM employees WHERE employee_id = ?");
+            $stmt->bind_param("s", $employee_id);
+            $stmt->execute();
+            $employee = $stmt->get_result()->fetch_assoc();
+        } else {
+            $errors[] = "Failed to update profile. Please try again.";
         }
         
-        if (empty($errors)) {
-            $stmt_update = $conn->prepare("UPDATE employees SET first_name = ?, last_name = ?, phone = ?, address = ?, profile_picture = ? WHERE employee_id = ?");
-            $stmt_update->bind_param("ssssss", $first_name, $last_name, $phone, $address, $profile_picture, $employee_id);
-            
-            if ($stmt_update->execute()) {
-                $success = "Profile updated successfully!";
-                
-                // Update session
-                $_SESSION['first_name'] = $first_name;
-                $_SESSION['last_name'] = $last_name;
-                $_SESSION['profile_picture'] = $profile_picture;
-                
-                // Refresh employee data
-                $stmt = $conn->prepare("SELECT * FROM employees WHERE employee_id = ?");
-                $stmt->bind_param("s", $employee_id);
-                $stmt->execute();
-                $employee = $stmt->get_result()->fetch_assoc();
-            } else {
-                $errors[] = "Failed to update profile. Please try again.";
-            }
-            
-            $stmt_update->close();
-        }
+        $stmt_update->close();
     }
 }
 
@@ -95,9 +103,10 @@ $conn->close();
                 <h5><i class="fas fa-user-circle me-2"></i>Profile Picture</h5>
             </div>
             <div class="card-body text-center">
-                <img src="<?php echo $employee['profile_picture'] ? 'uploads/profile/' . htmlspecialchars($employee['profile_picture']) : 'https://via.placeholder.com/150'; ?>" 
+                <img src="<?php echo !empty($employee['profile_picture']) ? 'https://via.placeholder.com/150' : '../uploads/profile/' . htmlspecialchars($employee['profile_picture']); ?>" 
                      alt="Profile Picture" 
-                     class="profile-avatar mb-3">
+                     class="profile-avatar mb-3"
+                     onerror="this.src='https://via.placeholder.com/150';">
                 <form method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="profile_picture" class="form-label">Change Profile Picture</label>

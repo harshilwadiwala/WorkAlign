@@ -42,6 +42,9 @@ function redirect($url) {
 }
 
 function sanitizeInput($data) {
+    if ($data === null) {
+        return '';
+    }
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);

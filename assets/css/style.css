@@ -213,15 +213,16 @@ body {
     width: 100%;
     padding: 2rem;
     border-radius: 1rem;
-    border: 2px solid var(--primary-color);
-    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
     color: var(--primary-color);
     font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     margin-bottom: 1rem;
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .quick-action-btn::before {
@@ -233,14 +234,28 @@ body {
     bottom: 0;
     background: var(--gradient-primary);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
+    border-radius: 1rem;
+}
+
+.quick-action-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
 }
 
 .quick-action-btn:hover {
-    background: var(--primary-color);
+    background: var(--gradient-primary);
     color: white;
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.3);
     border-color: var(--primary-color);
 }
 
@@ -248,16 +263,75 @@ body {
     opacity: 1;
 }
 
+.quick-action-btn:hover::after {
+    opacity: 1;
+    animation: shimmer 0.6s ease;
+}
+
 .quick-action-btn i,
 .quick-action-btn .fa-2x {
     position: relative;
-    z-index: 1;
-    transition: transform 0.3s ease;
+    z-index: 2;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-600));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(37, 99, 235, 0.2));
 }
 
 .quick-action-btn:hover i,
 .quick-action-btn:hover .fa-2x {
-    transform: scale(1.1);
+    transform: scale(1.15) rotateY(10deg);
+    -webkit-text-fill-color: white;
+    filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.4));
+}
+
+/* Icon-specific color schemes */
+.quick-action-btn:nth-child(1) i { /* Manage Employees */
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.quick-action-btn:nth-child(2) i { /* View Attendance */
+    background: linear-gradient(135deg, #10b981, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.quick-action-btn:nth-child(3) i { /* Leave Approvals */
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.quick-action-btn:nth-child(4) i { /* Payroll Management */
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.quick-action-btn:nth-child(5) i { /* Reports */
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.quick-action-btn:nth-child(6) i { /* Settings */
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.quick-action-btn:hover i {
+    -webkit-text-fill-color: white !important;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
 /* Enhanced Status Badges */
@@ -452,8 +526,6 @@ body {
 }
 
 .dashboard-card:hover i {
-    transform: scale(1.1);
-    color: #1d4ed8;
 }
 
 /* Enhanced Modal */
@@ -518,17 +590,17 @@ footer {
 
 /* Enhanced Animations */
 .fade-in {
-    animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(20px); 
+    from {
+        opacity: 0;
+        transform: translateY(30px);
     }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
